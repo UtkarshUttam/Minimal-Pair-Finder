@@ -90,7 +90,7 @@ class MinimalPairFinder extends React.Component {
               onChange={this.handleParagraphChange}
             />
           </Form.Group>
-          <Button className="my-3 mx-3" variant="success" type="submit">
+          <Button className="my-3" variant="success" type="submit">
             Find Minimal Pairs
           </Button>
           <button
