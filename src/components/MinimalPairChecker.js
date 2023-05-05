@@ -46,6 +46,12 @@ class MinimalPairFinder extends React.Component {
 
     return minimalPairs;
   }
+  handleClearClick = () => {
+    // console.log("Uppercase was clicked"+text);
+    let newText = "";
+    this.setState({paragraph:newText});
+    // props.showAlert("Text cleared!", "success");
+  };
 
   areWordsMinimalPair(word1, word2) {
     // Determine if the two words are a minimal pair
@@ -55,7 +61,7 @@ class MinimalPairFinder extends React.Component {
     if (word1.length !== word2.length || word1.length < 4) {
       return false;
     }
-  
+
     let diffCount = 0;
     for (let i = 0; i < word1.length; i++) {
       const hex1 = word1.charCodeAt(i).toString(16);
@@ -64,7 +70,7 @@ class MinimalPairFinder extends React.Component {
         diffCount++;
       }
     }
-  
+
     return diffCount === 1;
   }
 
@@ -74,7 +80,9 @@ class MinimalPairFinder extends React.Component {
         <h1 className="text-center display-1">Minimal Pair Finder</h1>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="formBasicParagraph">
-          <Form.Label className="display-5">Enter a Hindi paragraph:</Form.Label>
+            <Form.Label className="display-5">
+              Enter a Hindi paragraph:
+            </Form.Label>
             <Form.Control
               as="textarea"
               rows={8}
@@ -85,6 +93,12 @@ class MinimalPairFinder extends React.Component {
           <Button className="my-3 mx-3" variant="success" type="submit">
             Find Minimal Pairs
           </Button>
+          <button
+            className="btn btn-danger mx-2 my-1"
+            onClick={this.handleClearClick}
+          >
+            Clear text
+          </button>
         </Form>
         {this.state.minimalPairs.length > 0 ? (
           <div>
