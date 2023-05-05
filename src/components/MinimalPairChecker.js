@@ -111,7 +111,7 @@ class MinimalPairFinder extends React.Component {
               ))}
             </ul>
           </div>
-        ) : null}
+        ) : this.state.paragraph.length>0 ?<p>OOPS!! No Minimal Pairs Found.</p>:null}
       </div>
     );
   }
