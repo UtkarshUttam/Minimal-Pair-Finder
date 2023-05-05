@@ -106,7 +106,7 @@ class MinimalPairFinder extends React.Component {
             <ul>
               {this.state.minimalPairs.map((pair, index) => (
                 <li key={index}>
-                  {pair[0]} and {pair[1]}
+                  {pair[0]} - {pair[1]}
                 </li>
               ))}
             </ul>
