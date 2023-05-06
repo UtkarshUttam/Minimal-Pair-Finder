@@ -17,9 +17,9 @@ export default class Navbar extends Component {
         <li className="nav-item">
           <Link className="nav-link active" aria-current="page" to="/">Hindi</Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link active" aria-current="page" to="/Gujarati">Gujarati</Link>
-        </li>
+        </li> */}
         {/* <li className="nav-item">
           <a className="nav-link" href="#">Link</a>
         </li>
