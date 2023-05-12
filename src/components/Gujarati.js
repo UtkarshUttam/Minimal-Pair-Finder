@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import MinimalPairFinder from './MinimalPairFinder'
+import GujaratiMinimalPairsFinder from './Gujrati_Minimal'
+// import MinimalPairFinder from './MinimalPairFinder'
 
 export class Gujarati extends Component {
   render() {
     return (
         <div>
-            <MinimalPairFinder language="Gujarati"/>
+            {/* <MinimalPairFinder language="Gujarati"/> */}
+            <GujaratiMinimalPairsFinder/>
         </div>
     )
   }
