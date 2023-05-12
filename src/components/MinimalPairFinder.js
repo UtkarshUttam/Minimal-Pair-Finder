@@ -1,5 +1,5 @@
 import React,{Component} from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
 import PropTypes from 'prop-types'
 
 export class MinimalPairFinder extends Component {
@@ -123,16 +123,33 @@ export class MinimalPairFinder extends Component {
           </button>
         </Form>
         {this.state.minimalPairs.length > 0 ? (
-          <div>
-            <h4>Minimal Pairs:</h4>
+          <div className="container">
+            {/* <h4>Minimal Pairs:</h4>
             <ul className="list-group">
-              {/* {console.log(this.state.minimalPairs)} */}
+              { {console.log(this.state.minimalPairs)} }
               {this.state.minimalPairs.map((pair, index) => (
                 <li className="list-group-item" key={index}>
                   {pair[0]} - {pair[1]}
                 </li>
               ))}
-            </ul>
+            </ul> */}
+            Total Minimal Pairs found: {this.state.minimalPairs.length}
+            <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>शब्द(word)  1</th>
+                <th>शब्द(word) 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.minimalPairs.map((pair, index) => (
+                <tr key={index}>
+                  <td>{pair[0]}</td>
+                  <td>{pair[1]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
           </div>
         ) : this.state.paragraph.length>0 ?<p>OOPS!! No Minimal Pairs Found.</p>:null}
       </div>
