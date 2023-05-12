@@ -1,79 +1,164 @@
 import React, { Component } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
+import PropTypes from 'prop-types'
 
-class GujaratiMinimalPairs extends Component {
+export class GujaratiMinimalPairFinder extends Component {
+  static defaultProps = {
+    language: 'Gujarati'
+  }
+  static propTypes = {
+    language: PropTypes.string
+  }
   constructor(props) {
     super(props);
     this.state = {
       paragraph: "",
       minimalPairs: [],
     };
+    this.handleParagraphChange = this.handleParagraphChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getMinimalPairs = this.getMinimalPairs.bind(this);
   }
 
-  handleParagraphChange = (event) => {
+  handleParagraphChange(event) {
     this.setState({ paragraph: event.target.value });
-  };
+  }
 
-  findMinimalPairs = () => {
-    const words = this.state.paragraph.split(/[^\u0A80-\u0AFF]+/);
-    const minimalPairs = [];
-    const alreadyChecked = [];
+  handleSubmit(event) {
+    event.preventDefault();
 
-    words.forEach((word, index) => {
-      if (word.length >= 4 && word.length !== word.split('').filter(char => char === word[0]).length) {
-        for (let i = index + 1; i < words.length; i++) {
-          if (words[i].length >= 4 && words[i].length !== words[i].split('').filter(char => char === words[i][0]).length && !alreadyChecked.includes(i)) {
-            let pairsFound = true;
-            let differenceCount = 0;
-            for (let j = 0; j < word.length; j++) {
-              if (word[j] !== words[i][j]) {
-                differenceCount++;
-                if (differenceCount > 1) {
-                  pairsFound = false;
-                  break;
-                }
-              }
-              if (j === word.length - 1 && pairsFound && differenceCount === 1) {
-                minimalPairs.push([word, words[i]]);
-              }
-            }
-          }
-        }
-        alreadyChecked.push(index);
+    // Split the paragraph into words
+    const words = this.state.paragraph.split(/\s+/);
+
+    // Find the minimal pairs in the words
+    const minimalPairs = this.getMinimalPairs(words);
+
+    // Update the state with the minimal pairs
+    this.setState({ minimalPairs: minimalPairs });
+  }
+
+  removeDuplicates(array) {
+    const uniqueArray = [];
+
+    array.forEach(pair => {
+      // Check if the current pair already exists in the uniqueArray
+      const alreadyExists = uniqueArray.some(uniquePair => {
+        return uniquePair[0] === pair[0] && uniquePair[1] === pair[1];
+      });
+
+      if (!alreadyExists) {
+        // Add the pair to the uniqueArray
+        uniqueArray.push(pair);
       }
     });
 
-    this.setState({ minimalPairs: minimalPairs });
+    return uniqueArray;
+  }
+
+  getMinimalPairs(words) {
+    // Find all the minimal pairs in the given array of words
+    const minimalPairs = [];
+
+    for (let i = 0; i < words.length; i++) {
+      for (let j = i + 1; j < words.length; j++) {
+        if (this.areWordsMinimalPair(words[i], words[j])) {
+          minimalPairs.push([words[i], words[j]]);
+        }
+      }
+    }
+
+    return this.removeDuplicates(minimalPairs);
+  }
+
+  handleClearClick = () => {
+    // console.log("Uppercase was clicked"+text);
+    let newText = "";
+    this.setState({paragraph:newText});
+    // props.showAlert("Text cleared!", "success");
   };
 
+  areWordsMinimalPair(word1, word2) {
+    // Determine if the two words are a minimal pair
+    // You can implement your own logic here based on the rules of Gujarati minimal pairs
+    // This is just an example implementation that checks if the length of the two words is the same
+    // return word1.length === word2.length;
+
+    if (word1.length !== word2.length || word1.length < 4) {
+      return false;
+    }
+
+    let diffCount = 0;
+    for (let i = 0; i < word1.length; i++) {
+      const hex1 = word1.charCodeAt(i).toString(16);
+      const hex2 = word2.charCodeAt(i).toString(16);
+      if (hex1 !== hex2) {
+        diffCount++;
+      }
+    }
+
+    return diffCount === 1;
+  }
   render() {
     return (
-      <Container>
-        <h1>Gujarati Minimal Pairs Finder</h1>
-        <Form>
-          <Form.Group controlId="formParagraph">
-            <Form.Label>Enter a Gujarati Paragraph:</Form.Label>
+      <div className="container">
+        <h1 className="text-center display-1">Minimal Pair Finder</h1>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group controlId="formBasicParagraph">
+            <Form.Label className="display-5">
+              Enter a {this.props.language} paragraph:
+            </Form.Label>
             <Form.Control
               as="textarea"
-              rows={5}
+              rows={8}
               value={this.state.paragraph}
               onChange={this.handleParagraphChange}
             />
           </Form.Group>
-          <Button variant="primary" onClick={this.findMinimalPairs}>
+          <Button className="my-3" variant="success" type="submit">
             Find Minimal Pairs
           </Button>
+          <button
+            className="btn btn-danger mx-2 my-1"
+            onClick={this.handleClearClick}
+          >
+            Clear text
+          </button>
         </Form>
-        <hr />
-        <h2>Minimal Pairs:</h2>
-        <ul>
-          {this.state.minimalPairs.map((pair, index) => (
-            <li key={index}>{`${pair[0]} - ${pair[1]}`}</li>
-          ))}
-        </ul>
-      </Container>
+        {this.state.minimalPairs.length > 0 ? (
+          <div className="container">
+            {/* <h4>Minimal Pairs:</h4>
+            <ul className="list-group">
+              { {console.log(this.state.minimalPairs)} }
+              {this.state.minimalPairs.map((pair, index) => (
+                <li className="list-group-item" key={index}>
+                  {pair[0]} - {pair[1]}
+                </li>
+              ))}
+            </ul> */}
+            Total Minimal Pairs found: {this.state.minimalPairs.length}
+            <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th>शब्द(word)  1</th>
+                <th>शब्द(word) 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.minimalPairs.map((pair, index) => (
+                <tr key={index}>
+                  <td>{index+1}</td>
+                  <td>{pair[0]}</td>
+                  <td>{pair[1]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          </div>
+        ) : this.state.paragraph.length>0 ?<p>OOPS!! No Minimal Pairs Found.</p>:null}
+      </div>
     );
   }
 }
 
-export default GujaratiMinimalPairs;
+export default GujaratiMinimalPairFinder;
