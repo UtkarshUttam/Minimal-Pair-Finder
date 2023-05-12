@@ -36,7 +36,24 @@ export class MinimalPairFinder extends Component {
     // Update the state with the minimal pairs
     this.setState({ minimalPairs: minimalPairs });
   }
-
+  removeDuplicates(array) {
+    const uniqueArray = [];
+  
+    array.forEach(pair => {
+      // Check if the current pair already exists in the uniqueArray
+      const alreadyExists = uniqueArray.some(uniquePair => {
+        return uniquePair[0] === pair[0] && uniquePair[1] === pair[1];
+      });
+  
+      if (!alreadyExists) {
+        // Add the pair to the uniqueArray
+        uniqueArray.push(pair);
+      }
+    });
+  
+    return uniqueArray;
+  }
+  
   getMinimalPairs(words) {
     // Find all the minimal pairs in the given array of words
     const minimalPairs = [];
@@ -48,8 +65,8 @@ export class MinimalPairFinder extends Component {
         }
       }
     }
-
-    return minimalPairs;
+    
+    return this.removeDuplicates(minimalPairs);
   }
   handleClearClick = () => {
     // console.log("Uppercase was clicked"+text);
@@ -109,6 +126,7 @@ export class MinimalPairFinder extends Component {
           <div>
             <h4>Minimal Pairs:</h4>
             <ul>
+              {/* {console.log(this.state.minimalPairs)} */}
               {this.state.minimalPairs.map((pair, index) => (
                 <li key={index}>
                   {pair[0]} - {pair[1]}
