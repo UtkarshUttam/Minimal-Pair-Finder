@@ -137,6 +137,7 @@ export class MinimalPairFinder extends Component {
             <Table striped bordered hover>
             <thead>
               <tr>
+                <th>Sr. No.</th>
                 <th>शब्द(word)  1</th>
                 <th>शब्द(word) 2</th>
               </tr>
@@ -144,6 +145,7 @@ export class MinimalPairFinder extends Component {
             <tbody>
               {this.state.minimalPairs.map((pair, index) => (
                 <tr key={index}>
+                  <td>{index+1}</td>
                   <td>{pair[0]}</td>
                   <td>{pair[1]}</td>
                 </tr>
