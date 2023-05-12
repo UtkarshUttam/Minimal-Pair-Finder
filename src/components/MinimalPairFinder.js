@@ -125,10 +125,10 @@ export class MinimalPairFinder extends Component {
         {this.state.minimalPairs.length > 0 ? (
           <div>
             <h4>Minimal Pairs:</h4>
-            <ul>
+            <ul className="list-group">
               {/* {console.log(this.state.minimalPairs)} */}
               {this.state.minimalPairs.map((pair, index) => (
-                <li key={index}>
+                <li className="list-group-item" key={index}>
                   {pair[0]} - {pair[1]}
                 </li>
               ))}
