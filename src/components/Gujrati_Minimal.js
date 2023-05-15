@@ -36,7 +36,14 @@ export class GujaratiMinimalPairFinder extends Component {
     // Update the state with the minimal pairs
     this.setState({ minimalPairs: minimalPairs });
   }
-
+  handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      this.setState({ paragraph: text });
+    } catch (err) {
+      console.error('Failed to read clipboard contents: ', err);
+    }
+  };
   removeDuplicates(array) {
     const uniqueArray = [];
 
@@ -122,6 +129,12 @@ export class GujaratiMinimalPairFinder extends Component {
             onClick={this.handleClearClick}
           >
             Clear text
+          </button>
+          <button
+            className="btn btn-primary my-1"
+            onClick={this.handlePaste}
+          >
+            Paste text
           </button>
         </Form>
         {this.state.minimalPairs.length > 0 ? (

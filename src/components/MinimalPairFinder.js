@@ -68,6 +68,15 @@ export class MinimalPairFinder extends Component {
     
     return this.removeDuplicates(minimalPairs);
   }
+  handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      this.setState({ paragraph: text });
+    } catch (err) {
+      console.error('Failed to read clipboard contents: ', err);
+    }
+  };
+
   handleClearClick = () => {
     // console.log("Uppercase was clicked"+text);
     let newText = "";
@@ -116,10 +125,16 @@ export class MinimalPairFinder extends Component {
             Find Minimal Pairs
           </Button>
           <button
-            className="btn btn-danger mx-2 my-1"
+            className="btn btn-danger mx-1 my-1"
             onClick={this.handleClearClick}
           >
             Clear text
+          </button>
+          <button
+            className="btn btn-primary my-1"
+            onClick={this.handlePaste}
+          >
+            Paste text
           </button>
         </Form>
         {this.state.minimalPairs.length > 0 ? (
