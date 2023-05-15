@@ -1,5 +1,5 @@
 import React,{Component} from "react";
-import { Button, Form, Table, Table } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
 import PropTypes from 'prop-types'
 
 export class MinimalPairFinder extends Component {
