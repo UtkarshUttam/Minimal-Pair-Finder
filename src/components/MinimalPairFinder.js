@@ -116,9 +116,10 @@ export class MinimalPairFinder extends Component {
             </Form.Label>
             <Form.Control
               as="textarea"
-              rows={8}
+              rows={10}
               value={this.state.paragraph}
               onChange={this.handleParagraphChange}
+              style={{backgroundColor:"aliceblue"}}
             />
           </Form.Group>
           <Button className="my-3" variant="success" type="submit">
