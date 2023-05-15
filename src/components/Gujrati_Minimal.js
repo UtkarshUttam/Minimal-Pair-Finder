@@ -1,10 +1,10 @@
-import React,{Component} from "react";
-import { Button, Form, Table, Table } from "react-bootstrap";
+import React, { Component } from "react";
+import { Button, Form, Table } from "react-bootstrap";
 import PropTypes from 'prop-types'
 
-export class MinimalPairFinder extends Component {
+export class GujaratiMinimalPairFinder extends Component {
   static defaultProps = {
-    language: 'hindi'
+    language: 'Gujarati'
   }
   static propTypes = {
     language: PropTypes.string
@@ -36,24 +36,32 @@ export class MinimalPairFinder extends Component {
     // Update the state with the minimal pairs
     this.setState({ minimalPairs: minimalPairs });
   }
+  handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      this.setState({ paragraph: text });
+    } catch (err) {
+      console.error('Failed to read clipboard contents: ', err);
+    }
+  };
   removeDuplicates(array) {
     const uniqueArray = [];
-  
+
     array.forEach(pair => {
       // Check if the current pair already exists in the uniqueArray
       const alreadyExists = uniqueArray.some(uniquePair => {
         return uniquePair[0] === pair[0] && uniquePair[1] === pair[1];
       });
-  
+
       if (!alreadyExists) {
         // Add the pair to the uniqueArray
         uniqueArray.push(pair);
       }
     });
-  
+
     return uniqueArray;
   }
-  
+
   getMinimalPairs(words) {
     // Find all the minimal pairs in the given array of words
     const minimalPairs = [];
@@ -65,17 +73,9 @@ export class MinimalPairFinder extends Component {
         }
       }
     }
-    
+
     return this.removeDuplicates(minimalPairs);
   }
-  handlePaste = async () => {
-    try {
-      const text = await navigator.clipboard.readText();
-      this.setState({ paragraph: text });
-    } catch (err) {
-      console.error('Failed to read clipboard contents: ', err);
-    }
-  };
 
   handleClearClick = () => {
     // console.log("Uppercase was clicked"+text);
@@ -86,9 +86,10 @@ export class MinimalPairFinder extends Component {
 
   areWordsMinimalPair(word1, word2) {
     // Determine if the two words are a minimal pair
-    // You can implement your own logic here based on the rules of Hindi minimal pairs
+    // You can implement your own logic here based on the rules of Gujarati minimal pairs
     // This is just an example implementation that checks if the length of the two words is the same
     // return word1.length === word2.length;
+
     if (word1.length !== word2.length || word1.length < 4) {
       return false;
     }
@@ -104,7 +105,6 @@ export class MinimalPairFinder extends Component {
 
     return diffCount === 1;
   }
-
   render() {
     return (
       <div className="container">
@@ -125,7 +125,7 @@ export class MinimalPairFinder extends Component {
             Find Minimal Pairs
           </Button>
           <button
-            className="btn btn-danger mx-1 my-1"
+            className="btn btn-danger mx-2 my-1"
             onClick={this.handleClearClick}
           >
             Clear text
@@ -139,7 +139,15 @@ export class MinimalPairFinder extends Component {
         </Form>
         {this.state.minimalPairs.length > 0 ? (
           <div className="container">
-            <h4>Minimal Pairs:</h4>
+            {/* <h4>Minimal Pairs:</h4>
+            <ul className="list-group">
+              { {console.log(this.state.minimalPairs)} }
+              {this.state.minimalPairs.map((pair, index) => (
+                <li className="list-group-item" key={index}>
+                  {pair[0]} - {pair[1]}
+                </li>
+              ))}
+            </ul> */}
             Total Minimal Pairs found: {this.state.minimalPairs.length}
             <Table striped bordered hover>
             <thead>
@@ -166,4 +174,4 @@ export class MinimalPairFinder extends Component {
   }
 }
 
-export default MinimalPairFinder;
+export default GujaratiMinimalPairFinder;
