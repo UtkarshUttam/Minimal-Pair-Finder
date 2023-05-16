@@ -1,7 +1,6 @@
 import React,{Component} from "react";
 import { Button, Form, Table } from "react-bootstrap";
 import PropTypes from 'prop-types';
-import translate from "translate";
 
 
 export class MinimalPairFinder extends Component {
@@ -17,8 +16,6 @@ export class MinimalPairFinder extends Component {
       paragraph: "",
       minimalPairs: [],
     };
-    translate.engine = "deepl"; // "google", "yandex", "libre", "deepl"
-    translate.key = process.env.DEEPL_KEY;
     this.handleParagraphChange = this.handleParagraphChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getMinimalPairs = this.getMinimalPairs.bind(this);
@@ -27,10 +24,7 @@ export class MinimalPairFinder extends Component {
   handleParagraphChange(event) {
     this.setState({ paragraph: event.target.value });
   }
-  translation = async (word) => {
-    const translatedText = await translate(word, "en");
-    return translatedText;
-  }
+  
   handleSubmit(event) {
     event.preventDefault();
 
@@ -68,7 +62,7 @@ export class MinimalPairFinder extends Component {
     for (let i = 0; i < words.length; i++) {
       for (let j = i + 1; j < words.length; j++) {
         if (this.areWordsMinimalPair(words[i], words[j])) {
-          minimalPairs.push([words[i],this.translation(words[i]), words[j], this.translation(words[j])]);
+          minimalPairs.push([words[i], words[j]]);
         }
       }
     }
