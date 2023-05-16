@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import { Button, Form, Table } from "react-bootstrap";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+
 
 export class MinimalPairFinder extends Component {
   static defaultProps = {
@@ -23,7 +24,7 @@ export class MinimalPairFinder extends Component {
   handleParagraphChange(event) {
     this.setState({ paragraph: event.target.value });
   }
-
+  
   handleSubmit(event) {
     event.preventDefault();
 
@@ -116,9 +117,10 @@ export class MinimalPairFinder extends Component {
             </Form.Label>
             <Form.Control
               as="textarea"
-              rows={8}
+              rows={10}
               value={this.state.paragraph}
               onChange={this.handleParagraphChange}
+              style={{backgroundColor:"aliceblue"}}
             />
           </Form.Group>
           <Button className="my-3" variant="success" type="submit">
@@ -139,7 +141,7 @@ export class MinimalPairFinder extends Component {
         </Form>
         {this.state.minimalPairs.length > 0 ? (
           <div className="container">
-            <h4>Minimal Pairs:</h4>
+        
             Total Minimal Pairs found: {this.state.minimalPairs.length}
             <Table striped bordered hover>
             <thead>
