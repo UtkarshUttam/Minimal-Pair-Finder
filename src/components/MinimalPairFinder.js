@@ -112,7 +112,7 @@ export class MinimalPairFinder extends Component {
         <h1 className="text-center display-1">Minimal Pair Finder</h1>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="formBasicParagraph">
-            <Form.Label className="display-5">
+            <Form.Label className="display-5 my-5">
               Enter a {this.props.language} paragraph:
             </Form.Label>
             <Form.Control
