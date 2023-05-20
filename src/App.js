@@ -7,6 +7,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import Bengali from './components/Bengali';
 // import TextEntry from './components/TextEntry'
 // import MinimalPairChecker from './components/MinimalPairChecker'
 
@@ -20,6 +21,7 @@ export default class App extends Component {
         <Routes>
           <Route path="/" element={<Hindi/>}></Route>
           <Route path="/Gujarati" element={<Gujarati/>}></Route>        
+          <Route path="/Bengali" element={<Bengali/>}></Route>        
         {/* <MinimalPairChecker></MinimalPairChecker> */}
         </Routes>
         </Router>
