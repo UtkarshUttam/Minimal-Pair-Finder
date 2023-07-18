@@ -143,7 +143,7 @@ export class MinimalPairFinder extends Component {
           <div className="container">
         
             Total Minimal Pairs found: {this.state.minimalPairs.length}
-            <Table striped bordered hover>
+            <Table striped bordered hover className="tbl-design">
             <thead>
               <tr>
                 <th>Sr. No.</th>
